@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Feladat frissítése - Ez a dolgod!{% endblock %}
+{% block body %}
+<main>
+    <h1>Feladat frissítése</h1>
+    <form action="/update/{{ task.id }}" method="POST">
+        <input type="text" name="content" class="tasktext" value="{{ task.content }}">
+        <input type="submit" value="feladat frissítése">
+    </form>
+</main>
+{% endblock %}

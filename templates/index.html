@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Ez a dolgod!{% endblock %}
+{% block body %}
+<main>
+    <h1>Ez a dolgod!</h1>
+    {% if tasks %}
+    <table>
+        <tr>
+            <th>Feladat</th>
+            <th>Felvéve</th>
+            <th>Műveletek</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.content}}</td>
+            <td>{{ task.date_created.date() }}</td>
+            <td class="actions"><a href="/delete/{{ task.id }}"><img src="/static/img/delete.png" alt="törlés (szemétkuka)"></a> <a href="/update/{{ task.id }}"><img src="/static/img/update.png" alt="frissítés (önmagába visszatérő nyíl)"></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    Egyetlen feladatod sincs. Örüljél, és ha nagyon muszáj, írj egyet.
+    {% endif %}
+    <form action="/" method="POST">
+        <input type="text" name="content" class="tasktext" >
+        <input type="submit" value="feladat felvétele">
+    </form>
+</main>
+{% endblock %}
