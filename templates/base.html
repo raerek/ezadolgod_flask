@@ -12,8 +12,12 @@
     {% block head %}{% endblock %}
 </head>
 <body>
-    <aside><img src="/static/img/side.png" alt="sidebar decoration image"></aside>
-    {% block body %}{% endblock %}
-    
+    <div id="first">    
+        <aside><img src="/static/img/side.png" alt="sidebar decoration image"></aside>
+        <main>
+        {% block main %}{% endblock %}
+        </main>
+    </div>
+    <footer>{% if message %}{{ message }}{% endif %}</footer>
 </body>
 </html>

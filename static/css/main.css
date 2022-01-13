@@ -6,6 +6,9 @@ body {
     font-family: 'Montserrat', sans-serif;
     background-color: #ddd;
     margin-top: 50px;
+}
+
+#first {
     display: flex;
 }
 
@@ -58,6 +61,10 @@ form {
     padding: 12px 20px;
     box-sizing: border-box;
     font-size: larger;
+}
+
+footer {
+    text-align: right;
 }
 
 
