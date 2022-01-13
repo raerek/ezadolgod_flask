@@ -50,12 +50,12 @@ Néhány szerveren (pl. az Azure-ban futó MySQL-szerveren) a felhasználónevet
 `ezadolgoduser@teszt01:EzEgyJelszo321@teszt01.mysql.database.azure.com:3306/ezadolgod`  
 
 SSL-kapcsolat használata a MySQL-szerverhez való kapcsolódáskor:  
-A kapcsolathoz szükség van az adatbázist tanúsítványához tartozó tanúsítványhitelesítő tanúsítványára, azaz a CA-cert fájlra (pem formátumban). Két módon adhatjuk meg a fájlt az alaklamazásunknak:
+A kapcsolathoz szükség van az adatbázishoz tartozó tanúsítványhitelesítő tanúsítványára, azaz a CA-cert fájlra (pem formátumban). Két módon adhatjuk meg a fájlt az alkalmazásunknak:
 - A fájlt bemásolhatjuk a `certs` mappába, ilyenkor `CACERT_FILE` nevű környezeti változóban kell megadnunk a fájl nevét (a mappáét nem).
 - Megadhatjuk a fájl URL-jét a `CACERT_URL` nevű környezeti változóban, ilyenkor az alkalmazásunk induláskor letölti a fájlt.
 A mostani verzióban hibás fájlnév vagy URL esetén az alkalmazásunk nem indul el helyesen.  
 
-Ha bármelyik módon megadunk tanúsítványt, az alaklmazás annak használatával próbál kapcsolódni az adatbázishoz. Ha mindkét változó létezik, érdemes lehet tudni, hogy az URL magasabb precedenciájú a fájlnál.
+Ha bármelyik módon megadunk tanúsítványt, az alkalmazás annak használatával próbál kapcsolódni az adatbázishoz. Ha mindkét változó létezik, érdemes lehet tudni, hogy az URL magasabb precedenciájú a fájlnál.
 
 Azure Database for MySQL esetén a megfelelő cacert-fájl [innen](https://docs.microsoft.com/en-us/azure/mysql/howto-configure-ssl) tölthető le.  
 Az AWS RDS megfelelő tanúsítványai [innen](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html) tölthetők le.
@@ -88,13 +88,13 @@ A szerver bármelyik IP-címének 8000-es portján elérhető az alkalmazás.
 Telepítés:  
 `# apt install docker.io`
 
-A nem-privilegizált felhasználó lehetőséget kap a Docker használatára (a felhasználónak újra be kell jelentkeznie a csoporttagság évényre jutásához):  
+A nem-privilegizált felhasználó lehetőséget kap a Docker használatára (a felhasználónak újra be kell jelentkeznie a csoporttagság érvényre jutásához):  
 `# adduser raerek docker`
 
 ### Docker image előállítása
 `$ cd ~/ezadolgod_flask`  
 (Elhagyható: a Dockerfile megnyitása után a két ENTRYPOINT közül válasszuk azt, amelyik nekünk jobban megfelel. Állítsuk be a használni kívánt portot. Ha nem változtatunk, az alkalmazás a szabványos kimenetre naplózza az érkező kéréseket, és a 80-as porton érhető el.)  
-`$ docker build . -t raerek/ezadolgod_flask`  
+`$ docker build . -t ezadolgod_flask`  
 
 ### Docker konténer futtatása és megállítása
 `$ docker container run --detach --rm --publish 80:80 --name melovan ezadolgod_flask`  
