@@ -1,40 +1,59 @@
 # Ez a dolgod! - feladatlista-alkalmazás Pythonban
 
 Ez az alkalmazás Pythonban készült Flask keretrendszer felhasználásával, főként a konténerizációs munkafolyamat oktatására.
-Egyszerű feladatlistát valósít meg. A feladatok alapesetben SQLite-adatbázisfájlba kerülnek, MySQL használatát lásd lenn.
+Egyszerű feladatlistát valósít meg. A feladatok alapesetben SQLite-adatbázisfájlba kerülnek, MySQL használatát lásd lenn.  
+- [Az alkalmazás telepítése fizikai vagy virtuális gépre, és futtatása](#telepites)  
+- [MySQL- vagy MariaDB-adatbázis használata](#mysql)  
+- [Konténerkészítés](#kontener)  
 
-## Telepítés
-A leírás Ubuntu 20.04 friss telepítésen készült.
+<a name="telepites"></a>
+## Az alkalmazás telepítése fizikai vagy virtuális gépre, és futtatása
+A leírás Ubuntu 20.04 friss telepítésen készült.  
+A # root parancssort jelöl, a $ egyszerű felhasználóét az alábbiakban.
 
 ### Előkészületek
 PIP telepítése:  
-`apt install python3-pip`
+`# apt install python3-pip`
 
 Virtuális környezet (venv) telepítése:  
-`apt install python3-venv`
+`# apt install python3-venv`
+
+A programot bárhogy a gépre másolhatjuk.  
+Ha git használata mellett döntünk, akkor először a git telepítése szükséges:  
+`# apt install git`  
+Ezt követően klónozzuk a github-tárolót:  
+`$ git clone https://github.com/raerek/ezadolgod_flask.git`
+
+Belépünk a megfelelő mappába:  
+`$ cd ezadolgod_flask`  
 
 A virtuális környezet kialakítása:  
-`python3 -m venv venv`  
+`$ python3 -m venv venv`  
 és aktiválása:  
-`. ./venv/bin/activate`
+`$ . ./venv/bin/activate`
 
 A szükséges modulok telepítése PIP-pel:  
-`pip3 install -r requirements.txt`
+`(venv)$ pip3 install -r requirements.txt`
 
 A következő modulok és függőségeik települnek:  
 - Flask  
 - Flask-SQLAlchemy  
-- gunicorn (ha "élesben" futtatnád az alkalmazást)  
+- gunicorn (ha "élesben" futtatnánk az alkalmazást)  
 - PyMySQL
 
-### A szerver futtatása
-- `python3 app.py`  
-a szervert fejlesztő/hibakereső módban futtatja az 5000-es porton. A http://localhost:5000/ címet megnyitva érhető el az alkalmazás.  
-- `gunicorn --bind 0.0.0.0:8000 --workers 3 app:app`  
-a szervert "éles" módban futtatja a 8000-es porton.
+### Az alkalmazás futtatása
+- A szerver futtatása fejlesztő/hibakereső módban az 5000-es porton. A http://localhost:5000/ címet megnyitva érhető el az alkalmazás.  
+`(venv)$ python3 app.py`  
+- A szerver futtatása fejlesztő/hibakereső módban az 5000-es porton. A http://<szerver-IP-címe>:5000/ címet megnyitva érhető el az alkalmazás.  
+`(venv)$ flask run --host 0.0.0.0`  
+- A szerver futtatása "éles" módban futtatja a 8000-es porton.  
+`(venv)$ gunicorn --bind 0.0.0.0:8000 --workers 3 app:app`  
 
-### MySQL-adatbázis használata
+## Az alkalmazás elkészítéséhez felhasznált források
+Lásd a `credits.txt` fájlt.
 
+<a name="mysql"></a>
+## MySQL- vagy MariaDB-adatbázis használata
 A megfelelő adatbázis kialakítása és a kapcsolati felhasználó létrehozása a MySQL-szerverhez kapcsolódva:  
 `CREATE DATABASE ezadolgod;`  
 `CREATE TABLE ezadolgod.todo (id INT PRIMARY KEY AUTO_INCREMENT, content VARCHAR(200) NOT NULL, date_created DATETIME);`  
@@ -42,10 +61,10 @@ A megfelelő adatbázis kialakítása és a kapcsolati felhasználó létrehozá
 
 Az adatbázist MYSQL_URI környezeti változó értékeként kell megadni. Ha az alkalmazás talál ilyen környezeti változót, akkor az itt megadott adatbázishoz fordul, ha nem, akkor az alapértelmezett SQLite-adatbázist használja.  
 A fenti utasításokkal létrehozott adatbázis használatához a  
-`ezadolgoduser:EzEgyJelszo321@szerver-cmine-vagy-neve/ezadolgod`  
+`ezadolgoduser:EzEgyJelszo321@<szerver-címe-vagy-neve>/ezadolgod`  
 URI-t kell megadni.  
 Ha portot is megadnánk, akkor:  
-`ezadolgoduser:EzEgyJelszo321@szerver-cmine-vagy-neve:3306/ezadolgod`  
+`ezadolgoduser:EzEgyJelszo321@<szerver-címe-vagy-neve>:3306/ezadolgod`  
 Néhány szerveren (pl. az Azure-ban futó MySQL-szerveren) a felhasználónevet az adatbázisszerver nevével együtt kell megadnunk:  
 `ezadolgoduser@teszt01:EzEgyJelszo321@teszt01.mysql.database.azure.com:3306/ezadolgod`  
 
@@ -60,11 +79,10 @@ Ha bármelyik módon megadunk tanúsítványt, az alkalmazás annak használatá
 Azure Database for MySQL esetén a megfelelő cacert-fájl [innen](https://docs.microsoft.com/en-us/azure/mysql/howto-configure-ssl) tölthető le.  
 Az AWS RDS megfelelő tanúsítványai [innen](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html) tölthetők le.
 
-## Felhasznált források
-Lásd a credits.txt fájlt.
-
+<a name="kontener"></a>
 ## Konténerkészítés
-A leírás Debian 11 friss telepítésen készült. A # root parancssort jelöl, a $ egyszerű felhasználóét az alábbiakban.
+A leírás Debian 11 és Ubuntu 20.04 friss telepítésen biztosan működik.  
+A # root parancssort jelöl, a $ egyszerű felhasználóét az alábbiakban.
 
 ### A program beszerzése
 A programot bárhogy a gépre másolhatjuk.  
@@ -78,18 +96,21 @@ Ezt követően klónozzuk a github-tárolót:
 és  
 `$ cd ezadolgod_flask`  
 `$ python3 -m venv venv`  
-`$. ./venv/bin/activate`  
+`$ . ./venv/bin/activate`  
 `(venv)$ pip install -r requirements.txt`  
 `(venv)$ gunicorn --bind 0.0.0.0:8000 --workers 3 app:app`  
 A szerver bármelyik IP-címének 8000-es portján elérhető az alkalmazás.  
-Állítsuk meg a futását (Ctrl+C).
+Állítsuk meg a futását (Ctrl+C).  
+Deaktiváljuk a virtuális környezetet:  
+`(venv)$ deactivate`
 
 ### Docker telepítése és használatba vétele
 Telepítés:  
 `# apt install docker.io`
 
-A nem-privilegizált felhasználó lehetőséget kap a Docker használatára (a felhasználónak újra be kell jelentkeznie a csoporttagság érvényre jutásához):  
-`# adduser raerek docker`
+A nem-privilegizált felhasználó lehetőséget kap a Docker használatára:  
+`# adduser raerek docker`  
+A felhasználónak újra be kell jelentkeznie a csoporttagság-változás érvényre jutásához.
 
 ### Docker image előállítása
 `$ cd ~/ezadolgod_flask`  
@@ -97,8 +118,13 @@ A nem-privilegizált felhasználó lehetőséget kap a Docker használatára (a 
 `$ docker build . -t ezadolgod_flask`  
 
 ### Docker konténer futtatása és megállítása
+- SQLite-adatbázisban tároljuk a feladatokat. A webszerver minden IP-címén elérhető az alkalmazás a 80-as porton.  
 `$ docker container run --detach --rm --publish 80:80 --name melovan ezadolgod_flask`  
-A szerver minden IP-címén elérhető az alkalmazás a 80-as porton.  
+- MySQL-adatbázisban tároljuk a feladatokat. A webszerver minden IP-címén elérhető az alkalmazás a 80-as porton.  
+`$ docker container run --detach --rm --publish 80:80 --env MYSQL_URI=<a fenti,  "MySQL- vagy MariaDB-adatbázis használata" részen bemutatott alakú URI> --name melovan ezadolgod_flask`  
+- MySQL-adatbázisban tároljuk a feladatokat. Az adatbázisszerverhez SSL-lel kapcsolódunk, a tanúsítványhitelesítő tanúsítványát (a CACERT-fájlt) induláskor töltjük le. A webszerver minden IP-címén elérhető az alkalmazás a 80-as porton.  
+`docker container run --detach --rm --publish 80:80 --env MYSQL_URI=<a fenti,  "MySQL- vagy MariaDB-adatbázis használata" részen bemutatott alakú URI> --env CACERT_URL=http(s)://<szerver>/<cacert-fájl.pem> --name melovan ezadolgod_flask`
+- A konténer megállítása  
 `$ docker container stop melovan`
 
 ### Docker konténer közzététele dockerhubra:
@@ -110,4 +136,5 @@ A szerver minden IP-címén elérhető az alkalmazás a 80-as porton.
 Ha a tesztelést az image elkészítéséhez használt gépen végezzük, akkor távolítsuk el az image helyi verzióját:  
 `$ docker image rm raerek/ezadolgod_flask:latest`  
 Indíthatjuk a konténert:  
-`$ docker container run --detach --rm --publish 80:80 --name melovan raerek/ezadolgod_flask`
+`$ docker container run --detach --rm --publish 80:80 --name melovan raerek/ezadolgod_flask`  
+Szükség esetén megadhatjuk a MySQL/MariaDB használatához kellő környezeti változókat.
