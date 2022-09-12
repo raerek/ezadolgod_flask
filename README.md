@@ -8,7 +8,7 @@ Egyszerű feladatlistát valósít meg. A feladatok alapesetben SQLite-adatbázi
 
 <a name="telepites"></a>
 ## Az alkalmazás telepítése fizikai vagy virtuális gépre, és futtatása
-A leírás Ubuntu 20.04 friss telepítésen készült.  
+A leírás Ubuntu 20.04 és 22.04 friss telepítésen tesztelve.  
 A # root parancssort jelöl, a $ egyszerű felhasználóét az alábbiakban.
 
 ### Előkészületek
@@ -81,7 +81,7 @@ Az AWS RDS megfelelő tanúsítványai [innen](https://docs.aws.amazon.com/Amazo
 
 <a name="kontener"></a>
 ## Konténerkészítés
-A leírás Debian 11 és Ubuntu 20.04 friss telepítésen biztosan működik.  
+A leírás Debian 11, Ubuntu 20.04 és 22.04 friss telepítésen biztosan működik.  
 A # root parancssort jelöl, a $ egyszerű felhasználóét az alábbiakban.
 
 ### A program beszerzése
